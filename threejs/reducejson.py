@@ -1,7 +1,3 @@
-# USAGE python reducejson.py INPUTFILE.json
-# reads a threejs scene .json file and reduces the floating point decimal accuracy to 2
-# and saves file as INPUTFILE_proccessed.json
-
 import json
 from sys import argv
 import os
@@ -15,16 +11,22 @@ for i in data['geometries']:
 	
 	if 'vertices' in i['data']:
 		for idx, j in enumerate(i['data']['vertices']):
-			 i['data']['vertices'][idx] = round(j,2)
+			x = i['data']['vertices'][idx]
+			if isinstance(x, (int, long, float, complex)):
+				i['data']['vertices'][idx] = round(j,2)
 	
 	if 'normals' in i['data']:
 		for idx, j in enumerate(i['data']['normals']):
-			 i['data']['normals'][idx] = round(j,2)
+			x = i['data']['vertices'][idx]
+			if isinstance(x, (int, long, float, complex)):
+				i['data']['normals'][idx] = round(j,2)
 	
 	if 'uvs' in i['data']:
 		for j in i['data']['uvs']:
 			for idx, k in enumerate(j):
-				j[idx] = round(k,2) 
+				x = j[idx]
+				if isinstance(x, (int, long, float, complex)):
+					j[idx] = round(k,2) 
 
 
 newname = os.path.splitext(input_file)
